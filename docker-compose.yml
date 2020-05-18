@@ -1,13 +1,13 @@
  version: '3'
  services:
-  flask:
+  flask-backend:
    image: webapp-flask
    build:
     context: .
     dockerfile: Dockerfile-flask
    volumes:
     - "./:/app"
-  nginx:
+  nginx-frontend:
    image: webapp-nginx
    build:
     context: .
@@ -15,14 +15,15 @@
    ports:
     - 5000:80
    depends_on:
-    - flask
-
-  mongodb:
-    image: mongo:latest
-    container_name: uv-mongodb
-    volumes:
-      - ./data/db:/data/db
+    - flask-backend
+  node-angular:
+    build:
+     context: .
+     dockerfile: Dockerfile-angular
     ports:
-        - 27017:27017
-    command: mongod --auth
+      - "80:4200"
+    volumes:
+      - ./Frontend/:/usr/src/app
+    command: yarn run start
+
     

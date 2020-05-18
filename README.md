@@ -2,10 +2,14 @@
 Enrique Lira Martinez A01023351<br/>
 Emiliano Abascal Gurria A01023234<br/>
 Antony Adrian Morales Rosas A01019582<br/>
-Esmeralda Magdaleno Morales A01023086 <br/>
+Esmeralda Magdaleno Morales A01023086<br/>
 
 # Enunciado del problema
 En este pequeño proyecto, se implemento un modelo de regresión lineal  que predice el puntaje de un maestro individual al final del año. "score3" o la calificación final será nuestra etiqueta (salida) y el resto de las columnas serán nuestras características (entradas). Primero, exploraré los datos para ver si podemos comprender cuál es la historia detrás de los datos, este conjunto de datos contiene 28 preguntas que dividimos en 3 secciones, cada sección se conoce como un año escolar.
+
+# Diagrama de Arquitectura
+
+![Diagrama](arquitectura.png)
 
 # Prerrequisitos
 - `Docker`
@@ -33,7 +37,7 @@ docker-compose build
 ``` 
 y repetir el paso 4.
 
-6. Buscar la dirreccion localhost:5000 
+6. Buscar la dirreccion localhost o localhost:80 
 
 7. Da click en el boton de train para entrenar el modelo con el dataset
 
@@ -59,24 +63,16 @@ función `Train()`: Importamos nuestro dataset, este conjunto de datos contiene 
 
 Se ajusta el modelo de regresión lineal múltiple a nuestro conjunto de entrenamiento. Utilizamos el método de ajuste junto con los argumentos del método de ajuste, los cuales serán conjuntos de entrenamiento y luego creamos un modelo de archivo que contiene el modelo de entrenamiento.
 
-## Archivos Front End:
-### /static/style.css:
-Hoja de estilos para el HTML.
-### /static/app.js:
-Archivo JavaScript que se encarga de realizar las solicitudes al servidor Flask.
-
-Funcion `sendRequest()`:Se encarga de recopilar las entradas del usuario en la forma del HTML, formatearlas en formato JSON y de enviarlas asincronamente, asimismo de esperar su respuesta para mostrarla al usuario.
-
-Funcion `trainModelRequest()`:Se encarga de enviar una solicitud a la API para que vuelva a entrenar el modelo.
-
-### /templates/index.html: 
-HTML que contiene una pequeña forma para suministrar a la API con la información que necesita, asimismo contiene un botón que sirve para decirle a la API que debe entrenar el modelo nuevamente.
+## Archivos Front End (Angular):
+### Frontend/
 
 ## Archivos Docker:
 ### Dockerfile-nginx: 
 Dockerfile para el contenedor de NGINX.
 ### Dockerfile-flask: 
 Dockerfile para el contenedor de FLASK.
+### Dockerfile-angular: 
+Dockerfile para el contenedor de Angular.
 ### app.conf: 
 Archivo de configuración para el contenedor de NGINX, usado en Dockerfile-nginx.
 ### app.ini: 
@@ -85,3 +81,14 @@ Archivo de configuración para el contenedor de FLASK, usado en Dockerfile-flask
 Archivo que se utiliza para cargar las dependencias del contenedor de flask, por ejemplo ´numpy´.
 ### docker-compose.yml: 
 Archivo Docker-Compose para levantar todos los contenedores necesarios (Flask, NGINX).
+
+# Arquitectura
+
+# Versión Final
+## La versión final consistirá en lo siguiente:
+- Login alumnos, para poder hacer las evaluaciones de sus clases.
+- Login de profesores para poder acceder al dashboard de profesores
+- Dashboard de profesores para ver las evaluaciones realizadas por los alumnos, asi como una predicción sobre cual es su futura calificación dependiendo de su actual evaluación.
+- Capacidad de que los profesores puedan ver sus evaluaciones y palabras clave de cada una para poder recibir retroalimentación más efectiva.
+
+

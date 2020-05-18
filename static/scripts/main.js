@@ -7,15 +7,13 @@ function requestPrediction() {//Function to request prediction from server.
     if (grade1 < 1 || grade1 > 100 || grade2 < 1 || grade2 > 100 || id > 3 || id < 1 || isNaN(id) || isNaN(grade1) || isNaN(grade2)) {//Type check before sending it to the api
         alert("The grades must be between 1 and 100 and the ID must be between 1 and 3 (Only three professors)");
     } else {//If all the inputs are correct, then the grades are formated to be compatible with the model's input.
-        grade1 = grade1 * .45
-        grade2 = grade2 * .45
-        var data = JSON.stringify({ 'TeacherID': id, "1stGrade": grade1, "2ndGrade": grade2 })//JSON object to be sent to the api.
+        var data = JSON.stringify({ 'TeacherID': id, "grade1": grade1, "grade2": grade2 })//JSON object to be sent to the api.
         var xhttp = new XMLHttpRequest();//New HMLHTTP request (Like ajax)
         xhttp.onreadystatechange = function () {//Clousure that is called when the response from the api is receved.
             result = document.getElementById("prediction")//DOM element in the HTML to display the result.
             if (this.readyState == 4 && this.status == 200) {//If the state of the response is correct, then:
                 var json = JSON.parse(xhttp.responseText);//Parsed JSON.
-                result.textContent = "The grade of the professor next year should be: " + (json.prediction / .45);//Result added to the HTML
+                result.textContent = "The grade of the professor next year should be: " + (json.prediction);//Result added to the HTML
             } else {
                 result.textContent = "Something Went wrong, please try again";//Result added to the HTML
             }
@@ -56,6 +54,7 @@ function trainModelRequest() {//Function to request the server a new trained mod
 
     xhttp.open("POST", "/train", true);//Open connection to the server, at route /train.
     xhttp.setRequestHeader("Content-type", "application/json");//Set the content type as JSON.
+//    xhttp.open("GET", "/train", true);//Open connection to the server, at route /train.
     xhttp.send(data);//Send data.
 }
 
@@ -79,17 +78,14 @@ function getGraphs(teacherID) {//Function to request the server a new trained mo
     xhttp.setRequestHeader("Content-type", "application/json");//Set the content type as JSON.
     xhttp.send(data);//Send data.
 }
-
 function setChart(data) {
-    console.log(data['arr1']);
-    var ctx = document.getElementById('myChart').getContext('2d');
     new Chart(document.getElementById("myChart"), {
         type: 'bar',
         data: {
           labels: data['arr1'],
           datasets: [
             {
-              label: "eXAMPO",
+              label: "Example",
               backgroundColor: "#3e95cd",
               data: data['arr1']
             }
